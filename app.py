@@ -1,6 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for
+import os
 
 app = Flask(__name__)
+
+# Session configuration
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SECURE"] = False  # Set to True in production with HTTPS
+app.config["PERMANENT_SESSION_LIFETIME"] = 3600  # 1 hour
 
 
 # ------------------------------------------------------------------ #
@@ -25,6 +32,11 @@ def login():
 # ------------------------------------------------------------------ #
 # Placeholder routes — students will implement these                  #
 # ------------------------------------------------------------------ #
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
 
 @app.route("/logout")
 def logout():
